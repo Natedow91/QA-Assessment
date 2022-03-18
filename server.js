@@ -17,20 +17,21 @@ var rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
 
-// app.use(express.static(path.join(__dirname, "../public/index.js")))
+// app.use(express.static(path.join(__dirname, "/public/index.js")))
+// app.use(express.static(path.join(__dirname, "/public/index.html")))
 // app.use("/styles", express.static(path.join(__dirname, "../public/index.css")))
 // app.use(express.static(path.join(__dirname, "../public/index.html")))
-app.get("http://locahost:3000/", function(req, res){
-    res.sendFile(path.join(__dirname, "../public/index.js"))
+app.get("/", function(req, res){
+    res.sendFile(path.join(__dirname, "/public/index.js"))
 })
 
-app.get("http://locahost:3000/", function(req, res){
+app.get("/", function(req, res){
     rollbar.info("HTML is doing great")
-    res.sendFile(path.join(__dirname, "../public/index.html"))
+    res.sendFile(path.join(__dirname, "/public/index.html"))
 })
 
-app.get("http://locahost:3000/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.css"))
+app.get("/styles", function(req, res) {
+    res.sendFile(path.join(__dirname, "/public/index.css"))
 })
 
 app.get('/api/robots', (req, res) => {
