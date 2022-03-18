@@ -21,7 +21,7 @@ rollbar.log('Hello world!')
 // app.use(express.static(path.join(__dirname, "/public/index.html")))
 // app.use("/styles", express.static(path.join(__dirname, "../public/index.css")))
 // app.use(express.static(path.join(__dirname, "../public/index.html")))
-app.get("/", function(req, res){
+app.get("/js", function(req, res){
     res.sendFile(path.join(__dirname, "/public/index.js"))
 })
 
