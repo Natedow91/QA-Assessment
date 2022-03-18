@@ -6,8 +6,36 @@ const {shuffleArray} = require('./utils')
 
 app.use(express.json())
 
+// include and initialize the rollbar library with your access token
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: 'd898df56778d4792a45eb3c9491f38f8',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
+// app.use(express.static(path.join(__dirname, "../public/index.js")))
+// app.use("/styles", express.static(path.join(__dirname, "../public/index.css")))
+// app.use(express.static(path.join(__dirname, "../public/index.html")))
+app.get("http://locahost:3000/", function(req, res){
+    res.sendFile(path.join(__dirname, "../public/index.js"))
+})
+
+app.get("http://locahost:3000/", function(req, res){
+    rollbar.info("HTML is doing great")
+    res.sendFile(path.join(__dirname, "../public/index.html"))
+})
+
+app.get("http://locahost:3000/", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/index.css"))
+})
+
 app.get('/api/robots', (req, res) => {
     try {
+        rollbar.info("thats a good robot")
         res.status(200).send(botsArr)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
@@ -17,6 +45,7 @@ app.get('/api/robots', (req, res) => {
 
 app.get('/api/robots/five', (req, res) => {
     try {
+        rollbar.log('robots need to listen')
         let shuffled = shuffleArray(bots)
         let choices = shuffled.slice(0, 5)
         let compDuo = shuffled.slice(6, 8)
@@ -29,6 +58,7 @@ app.get('/api/robots/five', (req, res) => {
 
 app.post('/api/duel', (req, res) => {
     try {
+        rollbar.log("new robots are fun")
         // getting the duos from the front end
         let {compDuo, playerDuo} = req.body
 
